@@ -4,6 +4,7 @@
 ## Author: photonzz
 ## Version: @project-version@
 ## SavedVariables: ArenaLeaguesSavedVars
+## IconTexture: Interface\AddOns\ArenaLeagues\Textures\icon
 ## X-Website: https://github.com/photonzz/ArenaLeagues
 
 Database.lua
