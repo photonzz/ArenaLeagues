@@ -18,8 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Package and release (GitHub + CurseForge)
+      - name: Package and create GitHub release
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
         run: curl -sSf https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash

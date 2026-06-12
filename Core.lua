@@ -62,8 +62,10 @@ end
 -- and the rating is within the laddered range; otherwise falls back to the
 -- generic per-bracket curve. Returns a number (percent) or nil.
 function AL:EstimatePercentile(bracketIndex, rating, specID)
-    if specID and ns.SpecDist and ns.SpecDist.brackets then
-        local b = ns.SpecDist.brackets[bracketIndex]
+    if specID and ns.SpecDist and ns.SpecDist.regions then
+        local rk = self:CurrentRegion()
+        local rd = rk and ns.SpecDist.regions[rk]
+        local b = rd and rd.brackets and rd.brackets[bracketIndex]
         local sd = b and b[specID]
         if sd and sd.dist and rating >= sd.floor then
             return interp(sd.dist, rating)
@@ -73,6 +75,14 @@ function AL:EstimatePercentile(bracketIndex, rating, specID)
     local bracket = DB.brackets[bracketIndex]
     if not bracket or not bracket.distribution then return nil end
     return interp(bracket.distribution, rating)
+end
+
+-- Map the client's region to our data key (we ship US + EU; others fall back to
+-- the generic curve).
+local REGION_KEY = { [1] = "US", [3] = "EU" }
+function AL:CurrentRegion()
+    if type(GetCurrentRegion) ~= "function" then return nil end
+    return REGION_KEY[GetCurrentRegion()]
 end
 
 -- The player's current specialization id (used to pick the per-spec curve).

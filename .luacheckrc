@@ -17,8 +17,8 @@ read_globals = {
     "CreateFrame", "UIParent", "hooksecurefunc",
     -- PvP data / frames
     "GetPersonalRatedInfo", "ConquestFrame", "ConquestFrame_Update",
-    -- specialization
-    "GetSpecialization", "GetSpecializationInfo",
+    -- specialization + region
+    "GetSpecialization", "GetSpecializationInfo", "GetCurrentRegion",
     -- addon management
     "C_AddOns",
     -- Midnight restricted-value guards

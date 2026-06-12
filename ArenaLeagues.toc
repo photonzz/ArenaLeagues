@@ -5,7 +5,6 @@
 ## Version: @project-version@
 ## SavedVariables: ArenaLeaguesSavedVars
 ## X-Website: https://github.com/photonzz/ArenaLeagues
-# X-Curse-Project-ID: <set after creating the CurseForge project to enable CF uploads>
 
 Database.lua
 SpecDistribution.lua

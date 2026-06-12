@@ -1,9 +1,8 @@
 name: Weekly spec-data refresh
 
 # Regenerates SpecDistribution.lua from Blizzard's PvP leaderboard API and, if
-# the data changed, commits it, tags a new version, and publishes a release
-# (GitHub + CurseForge) so your addon manager auto-updates. Also runnable on
-# demand from the Actions tab.
+# the data changed, commits it, tags a new version, and publishes a GitHub
+# Release so WowUp auto-updates. Also runnable on demand from the Actions tab.
 on:
   schedule:
     - cron: '17 8 * * 2'   # Tuesdays ~08:17 UTC
@@ -35,7 +34,6 @@ jobs:
       - name: Commit, tag and release if the data changed
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
         run: |
           set -e
           if git diff --quiet -- SpecDistribution.lua; then
