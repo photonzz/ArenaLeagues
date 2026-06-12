@@ -1,0 +1,25 @@
+name: Release
+
+# Cut a release by pushing a version tag from your machine, e.g.:
+#   git tag -a v1.1.0 -m "v1.1.0" && git push origin v1.1.0
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Package and release (GitHub + CurseForge)
+        env:
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+        run: curl -sSf https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash

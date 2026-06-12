@@ -1,0 +1,13 @@
+package-as: ArenaLeagues
+
+enable-nolib-creation: no
+
+# Dev-only files that should NOT ship inside the packaged addon zip.
+ignore:
+  - tools
+  - .github
+  - .luacheckrc
+  - .gitattributes
+  - .gitignore
+  - .pkgmeta
+  - README.md

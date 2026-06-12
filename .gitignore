@@ -1,0 +1,8 @@
+# transient / local
+*.bak
+*.tmp
+.DS_Store
+# never commit credentials
+*.token
+*-creds
+*.pem

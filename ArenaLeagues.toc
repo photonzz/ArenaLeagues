@@ -1,0 +1,14 @@
+## Interface: 120005
+## Title: |cff00ccffArenaLeagues|r
+## Notes: Translates raw PvP rating into a League-style rank, division and progress bar on the rated queue panel.
+## Author: photonzz
+## Version: @project-version@
+## SavedVariables: ArenaLeaguesSavedVars
+## X-Website: https://github.com/photonzz/ArenaLeagues
+# X-Curse-Project-ID: <set after creating the CurseForge project to enable CF uploads>
+
+Database.lua
+SpecDistribution.lua
+Core.lua
+Effects.lua
+Interface.lua
