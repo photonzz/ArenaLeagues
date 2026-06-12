@@ -6,6 +6,7 @@
 ## SavedVariables: ArenaLeaguesSavedVars
 ## IconTexture: Interface\AddOns\ArenaLeagues\Textures\icon
 ## X-Website: https://github.com/photonzz/ArenaLeagues
+## X-Wago-ID: vNAgvEKo
 
 Database.lua
 SpecDistribution.lua

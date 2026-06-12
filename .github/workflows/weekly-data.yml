@@ -34,6 +34,7 @@ jobs:
       - name: Commit, tag and release if the data changed
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
         run: |
           set -e
           if git diff --quiet -- SpecDistribution.lua; then

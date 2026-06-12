@@ -18,7 +18,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Package and create GitHub release
+      - name: Package and release (GitHub + Wago)
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
         run: curl -sSf https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
