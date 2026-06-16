@@ -45,7 +45,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add SpecDistribution.lua
           git commit -m "data: weekly spec distribution refresh"
-          TAG="v1.0.${{ github.run_number }}"
+          # Next version = highest existing vX.Y.Z tag with the patch bumped
+          # (github.run_number is per-workflow and collides with manual tags).
+          latest=$(git tag -l 'v*' | sort -V | tail -1); [ -z "$latest" ] && latest=v1.0.0
+          ver=${latest#v}; MA=${ver%%.*}; rest=${ver#*.}; MI=${rest%%.*}; PA=${rest#*.}
+          PA=$((PA+1)); TAG="v$MA.$MI.$PA"
+          while git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; do PA=$((PA+1)); TAG="v$MA.$MI.$PA"; done
+          echo "Releasing $TAG"
           git tag -a "$TAG" -m "Weekly data refresh $TAG"
           git push origin HEAD:${{ github.ref_name }} --follow-tags
           # Package the freshly-tagged HEAD (exact tag -> proper release, not alpha).
