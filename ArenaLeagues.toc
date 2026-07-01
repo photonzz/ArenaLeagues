@@ -1,4 +1,4 @@
-## Interface: 120005
+## Interface: 120100, 120007, 120005
 ## Title: |cff00ccffArenaLeagues|r
 ## Notes: Translates raw PvP rating into a League-style rank, division and progress bar on the rated queue panel.
 ## Author: photonzz

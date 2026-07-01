@@ -31,20 +31,34 @@ jobs:
           SPECDIST_OUT: ${{ github.workspace }}/SpecDistribution.lua
         run: python3 tools/gen_specdist.py
 
-      - name: Commit, tag and release if the data changed
+      - name: Sync TOC interface to the current retail patches
+        run: |
+          set -e
+          line=$(curl -s https://addons.wago.io/api/data/game | python3 -c "
+          import sys,json
+          rt=json.load(sys.stdin)['patches']['retail']
+          def n(v):
+              a=(v.split('.')+['0','0','0'])[:3]; return int(a[0])*10000+int(a[1])*100+int(a[2])
+          ifaces=sorted({n(v) for v in rt}, reverse=True)[:3]
+          print('## Interface: ' + ', '.join(str(i) for i in ifaces))
+          ")
+          echo "Setting -> $line"
+          sed -i "s/^## Interface:.*/$line/" ArenaLeagues.toc
+
+      - name: Commit, tag and release if anything changed
         env:
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
           WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
         run: |
           set -e
-          if git diff --quiet -- SpecDistribution.lua; then
-            echo "No data change; nothing to release."
+          if git diff --quiet -- SpecDistribution.lua ArenaLeagues.toc; then
+            echo "No data or interface change; nothing to release."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add SpecDistribution.lua
-          git commit -m "data: weekly spec distribution refresh"
+          git add SpecDistribution.lua ArenaLeagues.toc
+          git commit -m "data: weekly spec distribution refresh + interface sync"
           # Next version = highest existing vX.Y.Z tag with the patch bumped
           # (github.run_number is per-workflow and collides with manual tags).
           latest=$(git tag -l 'v*' | sort -V | tail -1); [ -z "$latest" ] && latest=v1.0.0
